@@ -7,7 +7,7 @@ An Arduino-based security and environmental monitoring system combining PIN auth
 
 ## 🎥 Project Demo
 
-lv_0_20261016234046.mp4
+[Watch the Project Functioning](lv_0_20261016234046.mp4)
 
 ## 📌 Overview
 
