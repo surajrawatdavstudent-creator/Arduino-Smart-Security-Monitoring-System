@@ -250,8 +250,17 @@ The system then begins displaying the sensor readings.
 
 The LCD automatically cycles through three monitoring screens.
 
-### Temperature
+### Temperature And Humidity
 
 ```text
-TEMPERATURE
+TEMPERATURE 
 25.0°C
+
+HUMIDITY
+71%
+
+### Distance
+```text
+Distance
+13.1cm
+
