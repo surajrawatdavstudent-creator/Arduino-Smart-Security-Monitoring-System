@@ -7,10 +7,10 @@ An Arduino-based security and environmental monitoring system combining PIN auth
 
 ## 🎥 Project Demo
 
-[Watch the Project Functioning](lv_0_20261016234046.mp4)
+[Watch the Project Functioning](6-explanation.mp4)
 
 ## 📌 Overview
-
+[The Real circuit Diagram of Project](1.Overview.jpg)
 This project is a small Arduino-based security and environmental monitoring system built using an Arduino Uno.
 
 The system starts with a PIN-based authentication screen. The user enters a PIN using a 4×4 matrix keypad and presses the `2` key to submit it.
@@ -58,6 +58,8 @@ The project was built through hands-on testing and troubleshooting of individual
 ## ⚙️ How It Works
 
 ### 1. PIN Authentication
+
+[Pin Authentication UI](2.lcd_interface.jpg)
 
 When the system starts, the LCD displays the smart security screen and asks the user to enter a PIN.
 
@@ -137,6 +139,8 @@ The potentiometer is used to adjust the LCD contrast.
 
 ### DHT11
 
+[DH11 Display Temperature and Humidity](3.Temperature.jpg)
+[DH11 Display Temperature and Humidity](5.humidity.jpg)
 | DHT11 | Arduino |
 |---|---|
 | VCC | 5V |
@@ -144,6 +148,8 @@ The potentiometer is used to adjust the LCD contrast.
 | GND | GND |
 
 ### HC-SR04
+
+[DH11 Display Distance](4.Distance.jpg)
 
 | HC-SR04 | Arduino |
 |---|---|
