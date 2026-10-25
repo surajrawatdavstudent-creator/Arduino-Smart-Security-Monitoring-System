@@ -1,343 +1,265 @@
-# Smart Security & Environment Monitoring System
+# Arduino-Smart-Security-Monitoring-System
+Arduino-based security and environmental monitoring system with PIN authentication, temperature, humidity and distance monitoring
 
-An Arduino project that combines a keypad security system with temperature, humidity and distance monitoring. The Arduino sends the readings to Python, Python saves them in a CSV file, and another Python script creates an Excel dashboard.
+# Smart Security & Environmental Monitoring System 🔐🌡️
 
-## Project Status
+An Arduino-based security and environmental monitoring system combining PIN authentication, keypad input, LCD feedback, temperature and humidity monitoring, distance measurement, LEDs, and buzzer-based alerts.
 
-**Working system:** Arduino + keypad + LCD + DHT11 + HC-SR04 + LEDs + buzzer + Python serial logging + CSV + Excel dashboard.
+## 🎥 Project Demo
 
-The image section can be updated later with the latest project photos.
+[Watch the Project Functioning](6-explanation.mp4)
 
-## What I Built
+## 📌 Overview
+![The Real circuit Diagram of Project](1.Overview.jpg)
+This project is a small Arduino-based security and environmental monitoring system built using an Arduino Uno.
 
-This project started as an Arduino security system. I then connected it with Python so that the data is not only shown on the LCD but also saved for later use.
+The system starts with a PIN-based authentication screen. The user enters a PIN using a 4×4 matrix keypad and presses the `2` key to submit it.
 
-The full flow is:
+If the entered PIN is correct, the system grants access, turns on the green LED, and produces one short buzzer beep. After successful authentication, the system switches to monitoring mode and displays temperature, humidity, and distance readings on a 16×2 LCD.
 
-```text
-Arduino hardware
-      ↓
-PIN authentication
-      ↓
-Temperature + humidity + distance
-      ↓
-Serial communication
-      ↓
-Python
-      ↓
-CSV data file
-      ↓
-Excel dashboard + charts
-```
+The temperature and humidity are measured using a DHT11 sensor, while distance is measured using an HC-SR04 ultrasonic sensor.
 
-This makes the project more than a simple sensor display. It is a small system where hardware, code and data handling work together.
+If an incorrect PIN is entered, the red LED turns on and the buzzer sounds continuously for 3 seconds. After that, the system returns to the PIN entry screen.
 
-## Main Features
+The project was built through hands-on testing and troubleshooting of individual components before integrating everything into one working system.
 
-- PIN-based access control using a 4×4 keypad
-- 16×2 parallel LCD display
-- Green LED for correct access
-- Red LED for wrong access
-- Buzzer feedback for access results
-- DHT11 temperature and humidity readings
-- HC-SR04 distance readings
-- Arduino serial communication
-- Python data logging
-- CSV file for saved readings
-- Automatic Excel dashboard generation
-- Access result chart
-- Sensor reading chart
-- System can be locked again using `*`
+## ✨ Features
 
-## Hardware Used
+- 🔐 PIN-based access control
+- 🔢 4×4 matrix keypad input
+- 🖥️ 16×2 LCD display
+- 🌡️ Temperature monitoring using DHT11
+- 💧 Humidity monitoring using DHT11
+- 📏 Distance measurement using HC-SR04 ultrasonic sensor
+- 🟢 Green LED for successful authentication
+- 🔴 Red LED for failed authentication
+- 🔊 Buzzer-based access feedback
+- 📊 Automatic sensor display after successful login
+- 🔒 Relocking using the `*` key
+- ⚡ Arduino-based hardware and software integration
+
+## 🔧 Components Used
 
 | Component | Quantity |
 |---|---:|
 | Arduino Uno | 1 |
-| 16×2 parallel LCD | 1 |
-| 4×4 matrix keypad | 1 |
-| DHT11 | 1 |
-| HC-SR04 | 1 |
+| 16×2 Parallel LCD | 1 |
+| 4×4 Matrix Keypad | 1 |
+| DHT11 Temperature & Humidity Sensor | 1 |
+| HC-SR04 Ultrasonic Sensor | 1 |
 | Green LED | 1 |
 | Red LED | 1 |
-| 5V buzzer | 1 |
+| 5V Buzzer | 1 |
+| Potentiometer | 1 |
+| 220Ω Resistors | 2 |
 | Breadboard | 1 |
-| Jumper wires | As required |
-| 220Ω resistors | 2 |
-| LCD contrast potentiometer | 1 |
+| Jumper Wires | As required |
 
-## Final Pin Map
+## ⚙️ How It Works
 
-| Part | Arduino pin |
-|---|---|
-| Red LED | D2 |
-| Green LED | D3 |
-| DHT11 data | D4 |
-| Buzzer | D5 |
-| HC-SR04 Echo | D6 |
-| HC-SR04 Trig | D7 |
-| LCD RS | D8 |
-| LCD E | D9 |
-| LCD D4 | D10 |
-| LCD D5 | D11 |
-| LCD D6 | D12 |
-| LCD D7 | D13 |
-| Keypad R1 | A0 |
-| Keypad R2 | A1 |
-| Keypad R3 | A2 |
-| Keypad R4 | A3 |
-| Keypad C1 | A4 |
-| Keypad C2 | A5 |
-| Keypad C3 | D0 |
-| Keypad C4 | D1 |
+### 1. PIN Authentication
 
-See [`docs/pinout.md`](docs/pinout.md) for the same map with the important D0/D1 note.
+![Pin Authentication UI](2.lcd_interface.jpg)
 
-## Security System
+When the system starts, the LCD displays the smart security screen and asks the user to enter a PIN.
+
+The user enters the digits using the 4×4 keypad.
 
 The current PIN is:
 
+`333`
+
+After entering the PIN, the user presses the `2` key to submit it.
+
+### 2. Successful Authentication
+
+If the entered PIN matches the stored PIN:
+
+- The green LED turns on.
+- The red LED remains off.
+- The buzzer gives one short beep.
+- The LCD displays `ACCESS GRANTED`.
+- The system enters monitoring mode.
+
+### 3. Failed Authentication
+
+If the entered PIN is incorrect:
+
+- The red LED turns on.
+- The green LED remains off.
+- The buzzer sounds for approximately 3 seconds.
+- The LCD displays `ACCESS DENIED`.
+- The system returns to the PIN entry screen.
+
+### 4. Environmental Monitoring
+
+After successful authentication, the system continuously collects sensor data.
+
+The DHT11 measures:
+
+- Temperature
+- Humidity
+
+The HC-SR04 measures:
+
+- Distance
+
+Because the LCD has only two rows, the readings are displayed on separate screens and automatically cycle between temperature, humidity, and distance.
+
+### 5. Relocking
+
+Pressing the `*` key while monitoring immediately returns the system to the locked PIN screen.
+
+The green LED is turned off and the user must enter the PIN again to access the sensor readings.
+
+## 🔌 Pin Connections
+
+### LCD — 16×2 Parallel LCD
+
+| LCD Pin / Function | Arduino |
+|---|---|
+| VSS | GND |
+| VDD | 5V |
+| VO | Potentiometer middle pin |
+| RS | A0 |
+| RW | GND |
+| E | A1 |
+| D0 | Not connected |
+| D1 | Not connected |
+| D2 | Not connected |
+| D3 | Not connected |
+| D4 | A2 |
+| D5 | A3 |
+| D6 | A4 |
+| D7 | A5 |
+| LED+ | 5V through 220Ω resistor |
+| LED− | GND |
+
+The potentiometer is used to adjust the LCD contrast.
+
+### DHT11
+
+![DH11 Display Temperature and Humidity](3.Temperature.jpg)
+![DH11 Display Temperature and Humidity](5.humidity.jpg)
+| DHT11 | Arduino |
+|---|---|
+| VCC | 5V |
+| DATA | D2 |
+| GND | GND |
+
+### HC-SR04
+
+![DH11 Display Distance](4.Distance.jpg)
+
+| HC-SR04 | Arduino |
+|---|---|
+| VCC | 5V |
+| TRIG | D3 |
+| ECHO | D4 |
+| GND | GND |
+
+### Buzzer
+
+| Buzzer | Arduino |
+|---|---|
+| Positive (+) | D5 |
+| Negative (−) | GND |
+
+### LEDs
+
+#### Green LED
+
+| Connection | Arduino |
+|---|---|
+| Arduino output | D6 → 220Ω resistor → LED long leg |
+| LED short leg | GND |
+
+#### Red LED
+
+| Connection | Arduino |
+|---|---|
+| Arduino output | D7 → 220Ω resistor → LED long leg |
+| LED short leg | GND |
+
+Each LED uses its own current-limiting resistor.
+
+### 4×4 Matrix Keypad
+
+| Keypad Connection | Arduino |
+|---|---|
+| R1 | D8 |
+| R2 | D9 |
+| R3 | D10 |
+| R4 | D11 |
+| C1 | D12 |
+| C2 | D13 |
+| C3 | D0 |
+| C4 | D1 |
+
+**Note:** D0 and D1 are normally used for serial communication on the Arduino Uno. This project does not use Serial communication during normal operation.
+
+If the Arduino does not upload the program while the keypad is connected, temporarily disconnect the keypad wires connected to D0 and D1, upload the code, and reconnect them afterward.
+
+## 💻 Software & Libraries
+
+### Software
+
+- Arduino IDE
+- Arduino C/C++
+
+### Libraries
+
+The project uses the following Arduino libraries:
+
+- `LiquidCrystal`
+- `Keypad`
+- `DHT`
+
+The DHT library is used to communicate with the DHT11 temperature and humidity sensor.
+
+## 🎮 User Interaction
+
+| Key / Action | Function |
+|---|---|
+| `0–9` | Enter PIN digits |
+| `2` | Submit the entered PIN |
+| `*` | Clear the entered PIN |
+| `333 → 2` | Grant access |
+| Wrong PIN → `2` | Deny access |
+| `*` after login | Lock the system again |
+
+### Example
+
+The user enters:
+
+`333`
+
+Then presses:
+
+`2`
+
+The system responds with:
+
+`ACCESS GRANTED`
+
+The green LED turns on and the buzzer gives one short beep.
+
+The system then begins displaying the sensor readings.
+
+## 📊 Sensor Display
+
+The LCD automatically cycles through three monitoring screens.
+
+### Temperature And Humidity
+
 ```text
-111
-```
+TEMPERATURE 
+25.0°C
 
-The physical keypad key `4` is used as Enter/Submit.
-
-### Correct PIN
-
-When `111` is entered and `4` is pressed:
-
-1. Green LED turns on.
-2. Red LED stays off.
-3. Buzzer sounds for about 2 seconds.
-4. LCD shows `ACCESS GRANTED`.
-5. The system starts the sensor display.
-6. Python receives an `ACCESS_GRANTED` message.
-
-### Wrong PIN
-
-If another PIN is submitted:
-
-1. Red LED turns on.
-2. Green LED stays off.
-3. Buzzer sounds for about 5 seconds.
-4. LCD shows `ACCESS DENIED`.
-5. Python receives an `ACCESS_DENIED` message.
-6. The system returns to the PIN screen.
-
-### Other keys
-
-- `*` clears the PIN while the system is locked.
-- `*` locks the system again after access is granted.
-- Number keys are used to enter the PIN.
-
-## Sensor Monitoring
-
-After successful login, the LCD cycles through three screens:
-
-### Temperature
-
-The DHT11 reads temperature in °C.
-
-### Humidity
-
-The DHT11 reads humidity as a percentage.
+HUMIDITY
+71%
 
 ### Distance
-
-The HC-SR04 measures distance in cm. The code takes several readings and uses the valid readings to reduce random changes.
-
-## Python Part
-
-The Arduino sends simple text messages through serial communication.
-
-Examples:
-
 ```text
-SYSTEM_STARTED
-ACCESS_GRANTED
-TEMPERATURE:26.0
-HUMIDITY:57.8
-DISTANCE:10.3
-```
-
-Python reads these messages and waits until a complete granted-access record is available.
-
-For a denied attempt, Python saves the access result immediately.
-
-The main Python file is:
-
-```text
-python/arduino_python.py
-```
-
-## CSV Data
-
-The saved data uses this format:
-
-```text
-Date,Time,Access,Temperature_C,Humidity_percent,Distance_cm
-```
-
-Example structure:
-
-```text
-2026-10-24,23:52:09,GRANTED,24.3,55.3,11.7
-```
-
-The real CSV file is generated while the program is running. It is kept separate from the Arduino code so the data can be used again for analysis.
-
-## Excel Dashboard
-
-The second Python file is:
-
-```text
-python/update_dashboard.py
-```
-
-It reads the CSV file and creates:
-
-```text
-dashboard/Smart_Security_Auto_Dashboard.xlsx
-```
-
-The dashboard includes:
-
-- Total records
-- Granted attempts
-- Denied attempts
-- Latest temperature
-- Latest humidity
-- Latest distance
-- Access result chart
-- Sensor reading chart
-
-The Excel file is generated from the CSV, so it does not need to be edited by hand every time new data is added.
-
-## How To Run It
-
-### 1. Arduino
-
-Open:
-
-```text
-Smart_Security_System.ino
-```
-
-Install these Arduino libraries if they are not already installed:
-
-- LiquidCrystal
-- Keypad
-- DHT sensor library
-
-Upload the code to the Arduino Uno.
-
-Because the keypad uses D0 and D1, disconnect those two keypad wires during upload if the Arduino IDE cannot upload the program. Connect them again after the upload.
-
-### 2. Python
-
-Install the requirements:
-
-```text
-pip install -r requirements.txt
-```
-
-Check the COM port in `python/arduino_python.py` if your Arduino is not on `COM4`.
-
-Before running the Python program, close the Arduino Serial Monitor because Python needs the serial connection.
-
-Run:
-
-```text
-python python/arduino_python.py
-```
-
-### 3. Update the Excel dashboard manually
-
-The logger already runs the dashboard updater after saving a record. It can also be run directly:
-
-```text
-python python/update_dashboard.py
-```
-
-## Project Structure
-
-```text
-Arduino-Smart-Security-Monitoring-System/
-│
-├── Smart_Security_System.ino
-├── README.md
-├── requirements.txt
-├── .gitignore
-│
-├── python/
-│   ├── arduino_python.py
-│   └── update_dashboard.py
-│
-├── data/
-│   └── arduino_data.csv
-│
-├── dashboard/
-│   └── README.md
-│
-├── docs/
-│   └── pinout.md
-│
-├── LICENSE
-│
-├── 1.Overview.jpg
-├── 2.lcd_interface.jpg
-├── 3.Temperature.jpg
-├── 4.Distance.jpg
-├── 5.humidity.jpg
-└── 6-explanation.mp4
-```
-
-The existing images and video can stay in the repository. New photos can be added later when the final setup is ready.
-
-## Testing And Debugging
-
-This project needed a lot of testing because several components had to work together at the same time.
-
-Some of the main problems were:
-
-- LCD text becoming random
-- Keypad input affecting the rest of the system
-- HC-SR04 giving no echo at very short distances
-- DHT11 readings not appearing when the full system was connected
-- Arduino serial communication using the same D0/D1 pins as part of the keypad
-- Python and Excel needing the correct file paths
-- Old dashboard files causing confusion about which data was being opened
-
-Testing the components separately and then joining them together helped find these problems.
-
-## What I Learned
-
-- How to connect several Arduino components in one project
-- How to use a 4×4 keypad for a real input system
-- How to control a parallel 16×2 LCD
-- How to read DHT11 and HC-SR04 sensors
-- How Arduino serial communication works
-- How Python can read Arduino data
-- How to save sensor data in CSV format
-- How Python can create and update Excel files
-- How charts can make sensor data easier to understand
-- How to debug a project when several hardware parts are connected together
-
-## Future Ideas
-
-Possible next steps are:
-
-- Add better access history analysis
-- Add sensor limits and warnings
-- Add more detailed Excel charts
-- Add a web dashboard
-- Add a database for long-term records
-- Build a proper enclosure for the hardware
-- Improve the wiring and make a cleaner final hardware setup
-
-These are future improvements. The current Arduino + Python + CSV + Excel system is already working as one complete project.
-
-## About This Project
-
-I built this project as a hands-on electronics and programming project. The main goal was not only to make the sensors work, but to connect the hardware with Python and use the collected data in a useful way.
+Distance
+13.1cm
